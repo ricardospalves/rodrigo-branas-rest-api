@@ -1,2 +1,3 @@
-# rodrigo-branas-rest-api
-🔌 REST API criada durante a aula do @rodrigobranas
+# 🔌 Rest API
+
+Projeto criado durante a série [REST API](https://www.youtube.com/watch?v=yZifRUvxdAk&list=PLQCmSnNFVYnQ28Gd7SmWiM-dChqaWiy8i&ab_channel=RodrigoBranas) do [@rodrigobranas](https://github.com/rodrigobranas).
