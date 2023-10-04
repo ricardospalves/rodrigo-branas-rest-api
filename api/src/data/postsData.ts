@@ -16,3 +16,7 @@ export const savePost = ({
     [id, title, content, createdAt],
   )
 }
+
+export const deletePost = (id: string): Promise<null> => {
+  return database.none('delete from blog.post where id=$1', [id])
+}
