@@ -8,3 +8,7 @@ export const getPosts = (): Promise<PostEntity[]> => {
 export const savePost = (post: PostEntity) => {
   return postsData.savePost(post)
 }
+
+export const deletePost = (id: string) => {
+  return postsData.deletePost(id)
+}
