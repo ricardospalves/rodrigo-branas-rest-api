@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { randomBytes } from 'node:crypto'
 import axios from 'axios'
-import { deletePost, savePost } from '../service/postsService'
+import { deletePost, savePost, getPost } from '../service/postsService'
 import { PostEntity } from '../entities/Post'
 
 const generate = () => {
@@ -54,6 +54,31 @@ test('API Test Suite', async (testContext) => {
 
     assert.strictEqual(post.title, data.title)
     assert.strictEqual(post.content, data.content)
+
+    await deletePost(post.id)
+  })
+
+  await testContext.test('should update a post', async () => {
+    const post = await savePost({
+      content: generate(),
+      title: generate(),
+    })
+
+    console.log(post.title)
+
+    post.title = generate()
+    post.content = generate()
+
+    console.log(post.title)
+
+    await api.put(`/posts/:${post.id}`, post)
+
+    const updatedPost = await getPost(post.id)
+
+    console.log(updatedPost?.title)
+
+    assert.strictEqual(updatedPost?.title, post.title)
+    assert.strictEqual(updatedPost?.content, post.content)
 
     await deletePost(post.id)
   })
