@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express'
-import { getPosts, savePost } from '../service/postsService'
+import { getPosts, savePost, updatePost } from '../service/postsService'
 import { PostEntity } from '../entities/Post'
 
 const router = Router()
@@ -19,6 +19,18 @@ router.post('/posts', async (request: Request, response: Response) => {
   const posts = await savePost({ content, title })
 
   return response.status(200).json(posts)
+})
+
+router.put('/posts/:id', async (request: Request, response: Response) => {
+  const { id } = request.params
+  const { content, title } = request.body as Omit<
+    PostEntity,
+    'id' | 'createdAt'
+  >
+
+  await updatePost(id, { content, title })
+
+  return response.status(200).end()
 })
 
 export { router }
