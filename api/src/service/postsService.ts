@@ -5,7 +5,15 @@ export const getPosts = (): Promise<PostEntity[]> => {
   return postsData.getPosts()
 }
 
-export const savePost = (post: PostEntity) => {
+export const savePost = ({
+  content,
+  title,
+}: Omit<PostEntity, 'id' | 'createdAt'>) => {
+  const post = new PostEntity({
+    content,
+    title,
+  })
+
   return postsData.savePost(post)
 }
 
