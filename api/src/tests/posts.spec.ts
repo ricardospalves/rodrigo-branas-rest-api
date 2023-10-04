@@ -13,7 +13,7 @@ const api = axios.create({
   baseURL: 'http://localhost:8080/api/',
 })
 
-test('API Test Suit', async (testContext) => {
+test('API Test Suite', async (testContext) => {
   await testContext.test('should get posts', async () => {
     const post1 = await savePost(
       new PostEntity({
@@ -42,5 +42,19 @@ test('API Test Suit', async (testContext) => {
     await deletePost(post1.id)
     await deletePost(post2.id)
     await deletePost(post3.id)
+  })
+
+  await testContext.test('should save a post', async () => {
+    const data: Omit<PostEntity, 'id' | 'createdAt'> = {
+      content: generate(),
+      title: generate(),
+    }
+    const response = await api.post('/posts', data)
+    const post = response.data
+
+    assert.strictEqual(post.title, data.title)
+    assert.strictEqual(post.content, data.content)
+
+    await deletePost(post.id)
   })
 })
