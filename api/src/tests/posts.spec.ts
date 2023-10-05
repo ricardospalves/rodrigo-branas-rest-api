@@ -75,10 +75,10 @@ test('API Test Suite', async (testContext) => {
     post.title = generate()
     post.content = generate()
 
-    await api.put(`/posts/${post.id}`, post)
-
+    const response = await api.put(`/posts/${post.id}`, post)
     const updatedPost = await getPost(post.id)
 
+    assert.strictEqual(response.status, 204)
     assert.strictEqual(updatedPost?.title, post.title)
     assert.strictEqual(updatedPost?.content, post.content)
 
