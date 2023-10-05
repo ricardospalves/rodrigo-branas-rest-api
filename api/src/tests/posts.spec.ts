@@ -54,6 +54,7 @@ test('API Test Suite', async (testContext) => {
     const response = await api.post('/posts', data)
     const post = response.data
 
+    assert.strictEqual(response.status, 201)
     assert.strictEqual(post.title, data.title)
     assert.strictEqual(post.content, data.content)
 
