@@ -9,7 +9,7 @@ export const getPost = async (id: string) => {
   const post = await postsData.getPost(id)
 
   if (!post) {
-    throw new Error('Post not found')
+    throw new Error('Post not found.')
   }
 
   return postsData.getPost(id)
