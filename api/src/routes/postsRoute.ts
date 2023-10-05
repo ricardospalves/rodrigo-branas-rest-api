@@ -21,9 +21,15 @@ router.post('/posts', async (request: Request, response: Response) => {
     'id' | 'createdAt'
   >
 
-  const posts = await savePost({ content, title })
+  try {
+    const posts = await savePost({ content, title })
 
-  return response.status(201).json(posts)
+    return response.status(201).json(posts)
+  } catch (exception) {
+    return response.status(409).json({
+      message: (exception as Error)?.message,
+    })
+  }
 })
 
 router.put('/posts/:id', async (request: Request, response: Response) => {
