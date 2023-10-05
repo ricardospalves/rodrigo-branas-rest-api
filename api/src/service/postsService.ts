@@ -5,7 +5,13 @@ export const getPosts = (): Promise<PostEntity[]> => {
   return postsData.getPosts()
 }
 
-export const getPost = (id: string) => {
+export const getPost = async (id: string) => {
+  const post = await postsData.getPost(id)
+
+  if (!post) {
+    throw new Error('Post not found')
+  }
+
   return postsData.getPost(id)
 }
 
@@ -21,10 +27,12 @@ export const savePost = ({
   return postsData.savePost(post)
 }
 
-export const updatePost = (
+export const updatePost = async (
   id: string,
   { content, title }: Omit<PostEntity, 'id' | 'createdAt'>,
 ) => {
+  await getPost(id)
+
   return postsData.updatePost(id, {
     content,
     title,
