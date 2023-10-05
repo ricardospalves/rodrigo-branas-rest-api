@@ -34,8 +34,10 @@ test('API Test Suite', async (testContext) => {
       }),
     )
 
-    const { data } = await api.get('/posts')
-    const posts = data
+    const response = await api.get('/posts')
+    const posts = response.data
+
+    assert.strictEqual(response.status, 200)
 
     assert.strictEqual(posts.length, 3)
 
