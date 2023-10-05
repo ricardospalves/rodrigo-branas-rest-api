@@ -43,7 +43,7 @@ router.delete('/posts/:id', async (request: Request, response: Response) => {
 
   await deletePost(id)
 
-  return response.end()
+  return response.status(204).end()
 })
 
 export { router }
