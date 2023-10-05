@@ -64,18 +64,12 @@ test('API Test Suite', async (testContext) => {
       title: generate(),
     })
 
-    console.log(post.title)
-
     post.title = generate()
     post.content = generate()
 
-    console.log(post.title)
-
-    await api.put(`/posts/:${post.id}`, post)
+    await api.put(`/posts/${post.id}`, post)
 
     const updatedPost = await getPost(post.id)
-
-    console.log(updatedPost?.title)
 
     assert.strictEqual(updatedPost?.title, post.title)
     assert.strictEqual(updatedPost?.content, post.content)
