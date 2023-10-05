@@ -33,9 +33,15 @@ router.put('/posts/:id', async (request: Request, response: Response) => {
     'id' | 'createdAt'
   >
 
-  await updatePost(id, { content, title })
+  try {
+    await updatePost(id, { content, title })
 
-  return response.status(204).end()
+    return response.status(204).end()
+  } catch (error) {
+    return response.status(404).json({
+      message: (error as Error)?.message,
+    })
+  }
 })
 
 router.delete('/posts/:id', async (request: Request, response: Response) => {
