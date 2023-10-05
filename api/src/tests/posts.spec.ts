@@ -69,6 +69,20 @@ test('API Test Suite', async (testContext) => {
     await deletePost(post.id)
   })
 
+  await testContext.test('should not save a post', async () => {
+    const data: Omit<PostEntity, 'id' | 'createdAt'> = {
+      content: generate(),
+      title: generate(),
+    }
+    const response1 = await api.post('/posts', data)
+    const response2 = await api.post('/posts', data)
+    const post = response1.data
+
+    assert.strictEqual(response2.status, 409)
+
+    await deletePost(post.id)
+  })
+
   await testContext.test('should update a post', async () => {
     const post = await savePost({
       content: generate(),
