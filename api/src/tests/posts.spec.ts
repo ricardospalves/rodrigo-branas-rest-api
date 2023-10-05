@@ -91,10 +91,11 @@ test('API Test Suite', async (testContext) => {
       title: generate(),
     })
 
-    await api.delete(`/posts/${post.id}`)
+    const response = await api.delete(`/posts/${post.id}`)
 
     const posts = await getPosts()
 
+    assert.strictEqual(response.status, 204)
     assert.strictEqual(posts.length, 0)
   })
 })
