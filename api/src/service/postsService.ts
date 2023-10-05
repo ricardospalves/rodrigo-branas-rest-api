@@ -15,7 +15,7 @@ export const getPost = async (id: string) => {
   return postsData.getPost(id)
 }
 
-export const savePost = ({
+export const savePost = async ({
   content,
   title,
 }: Omit<PostEntity, 'id' | 'createdAt'>) => {
@@ -23,6 +23,11 @@ export const savePost = ({
     content,
     title,
   })
+  const existingPost = await postsData.getPostByTitle(post.title)
+
+  if (existingPost) {
+    throw new Error('Post already exists.')
+  }
 
   return postsData.savePost(post)
 }
