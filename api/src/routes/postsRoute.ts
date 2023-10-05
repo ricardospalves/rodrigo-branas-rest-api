@@ -35,7 +35,7 @@ router.put('/posts/:id', async (request: Request, response: Response) => {
 
   await updatePost(id, { content, title })
 
-  return response.status(200).end()
+  return response.status(204).end()
 })
 
 router.delete('/posts/:id', async (request: Request, response: Response) => {
