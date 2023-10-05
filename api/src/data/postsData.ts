@@ -9,6 +9,10 @@ export const getPost = (id: string): Promise<PostEntity | null> => {
   return database.oneOrNone('select * from blog.post where id = $1', [id])
 }
 
+export const getPostByTitle = (title: string): Promise<PostEntity | null> => {
+  return database.oneOrNone('select * from blog.post where title = $1', [title])
+}
+
 export const savePost = ({
   content,
   createdAt,
