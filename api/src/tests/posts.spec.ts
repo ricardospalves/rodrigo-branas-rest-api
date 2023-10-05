@@ -2,7 +2,12 @@ import test from 'node:test'
 import assert from 'node:assert'
 import { randomBytes } from 'node:crypto'
 import axios from 'axios'
-import { deletePost, savePost, getPost } from '../service/postsService'
+import {
+  deletePost,
+  savePost,
+  getPost,
+  getPosts,
+} from '../service/postsService'
 import { PostEntity } from '../entities/Post'
 
 const generate = () => {
@@ -78,5 +83,18 @@ test('API Test Suite', async (testContext) => {
     assert.strictEqual(updatedPost?.content, post.content)
 
     await deletePost(post.id)
+  })
+
+  await testContext.test('should delete a post', async () => {
+    const post = await savePost({
+      content: generate(),
+      title: generate(),
+    })
+
+    await api.delete(`/posts/${post.id}`)
+
+    const posts = await getPosts()
+
+    assert.strictEqual(posts.length, 0)
   })
 })
