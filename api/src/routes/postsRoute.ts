@@ -18,7 +18,7 @@ router.post('/posts', async (request: Request, response: Response) => {
 
   const posts = await savePost({ content, title })
 
-  return response.status(200).json(posts)
+  return response.status(201).json(posts)
 })
 
 router.put('/posts/:id', async (request: Request, response: Response) => {
