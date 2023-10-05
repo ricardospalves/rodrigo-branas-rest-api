@@ -16,6 +16,9 @@ const generate = () => {
 
 const api = axios.create({
   baseURL: 'http://localhost:8080/api/',
+  validateStatus() {
+    return true
+  },
 })
 
 test('API Test Suite', async (testContext) => {
@@ -83,6 +86,16 @@ test('API Test Suite', async (testContext) => {
     assert.strictEqual(updatedPost?.content, post.content)
 
     await deletePost(post.id)
+  })
+
+  await testContext.test('should not update a post', async () => {
+    const post = {
+      id: 'this ID does not exist',
+    }
+
+    const response = await api.put(`/posts/${post.id}`, post)
+
+    assert.strictEqual(response.status, 404)
   })
 
   await testContext.test('should delete a post', async () => {
